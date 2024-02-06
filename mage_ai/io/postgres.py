@@ -166,6 +166,8 @@ class Postgres(BaseSQL):
         self,
         schema_name: str
     ) -> str:
+        # FIXME: Make this a no-op only for CrateDB.
+        return "SELECT 1;"
         return f"""
         DO $$
         BEGIN
