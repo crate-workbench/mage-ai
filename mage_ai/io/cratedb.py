@@ -69,21 +69,21 @@ class CrateDB(BaseSQL):
         )
 
     @classmethod
-    def with_config(cls, config: BaseConfigLoader) -> 'Postgres':
+    def with_config(cls, config: BaseConfigLoader) -> 'CrateDB':
         return cls(
-            dbname=config[ConfigKey.POSTGRES_DBNAME],
-            user=config[ConfigKey.POSTGRES_USER],
-            password=config[ConfigKey.POSTGRES_PASSWORD],
-            host=config[ConfigKey.POSTGRES_HOST],
-            port=config[ConfigKey.POSTGRES_PORT],
-            schema=config[ConfigKey.POSTGRES_SCHEMA],
-            connection_method=config[ConfigKey.POSTGRES_CONNECTION_METHOD],
-            ssh_host=config[ConfigKey.POSTGRES_SSH_HOST],
-            ssh_port=config[ConfigKey.POSTGRES_SSH_PORT],
-            ssh_username=config[ConfigKey.POSTGRES_SSH_USERNAME],
-            ssh_password=config[ConfigKey.POSTGRES_SSH_PASSWORD],
-            ssh_pkey=config[ConfigKey.POSTGRES_SSH_PKEY],
-            connect_timeout=config[ConfigKey.POSTGRES_CONNECT_TIMEOUT],
+            dbname=config[ConfigKey.CRATEDB_DBNAME],
+            user=config[ConfigKey.CRATEDB_USER],
+            password=config[ConfigKey.CRATEDB_PASSWORD],
+            host=config[ConfigKey.CRATEDB_HOST],
+            port=config[ConfigKey.CRATEDB_PORT],
+            schema=config[ConfigKey.CRATEDB_SCHEMA],
+            connection_method=config[ConfigKey.CRATEDB_CONNECTION_METHOD],
+            ssh_host=config[ConfigKey.CRATEDB_SSH_HOST],
+            ssh_port=config[ConfigKey.CRATEDB_SSH_PORT],
+            ssh_username=config[ConfigKey.CRATEDB_SSH_USERNAME],
+            ssh_password=config[ConfigKey.CRATEDB_SSH_PASSWORD],
+            ssh_pkey=config[ConfigKey.CRATEDB_SSH_PKEY],
+            connect_timeout=config[ConfigKey.CRATEDB_CONNECT_TIMEOUT],
         )
 
     def default_database(self) -> str:
@@ -93,7 +93,7 @@ class CrateDB(BaseSQL):
         return self.settings.get('schema')
 
     def open(self) -> None:
-        with self.printer.print_msg('Opening connection to PostgreSQL database'):
+        with self.printer.print_msg('Opening connection to CrateDB database'):
             database = self.settings['dbname']
             host = self.settings['host']
             password = self.settings['password']
@@ -218,7 +218,7 @@ class CrateDB(BaseSQL):
 
             raise BadConversionError(
                 f'Cannot convert column \'{column.name}\' with data type \'{dtype}\' to '
-                'a PostgreSQL datatype.'
+                'a CrateDB datatype.'
             )
         elif dtype in (PandasTypes.DATETIME, PandasTypes.DATETIME64):
             try:
