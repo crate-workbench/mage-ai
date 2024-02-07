@@ -341,22 +341,22 @@ class CrateDB(BaseSQL):
                 f'VALUES ({values_placeholder})',
             ]
 
-            unique_constraints = \
-                [f'"{self._clean_column_name(col, allow_reserved_words=allow_reserved_words)}"'
-                 for col in unique_constraints]
-            columns_cleaned = \
-                [f'"{self._clean_column_name(col, allow_reserved_words=allow_reserved_words)}"'
-                 for col in columns]
-
-            commands.append(f"ON CONFLICT ({', '.join(unique_constraints)})")
-            if UNIQUE_CONFLICT_METHOD_UPDATE == unique_conflict_method:
-                update_command = [f'{col} = EXCLUDED.{col}' for col in columns_cleaned]
-                commands.append(
-                    f"DO UPDATE SET {', '.join(update_command)}",
-                )
-            else:
-                commands.append('DO NOTHING')
-            cursor.executemany('\n'.join(commands), values)
+            #unique_constraints = \
+            #    [f'"{self._clean_column_name(col, allow_reserved_words=allow_reserved_words)}"'
+            #     for col in unique_constraints]
+            #columns_cleaned = \
+            #    [f'"{self._clean_column_name(col, allow_reserved_words=allow_reserved_words)}"'
+            #     for col in columns]
+#
+            #commands.append(f"ON CONFLICT ({', '.join(unique_constraints)})")
+            #if UNIQUE_CONFLICT_METHOD_UPDATE == unique_conflict_method:
+            #    update_command = [f'{col} = EXCLUDED.{col}' for col in columns_cleaned]
+            #    commands.append(
+            #        f"DO UPDATE SET {', '.join(update_command)}",
+            #    )
+            #else:
+            #    commands.append('DO NOTHING')
+            cursor. executemany('\n'.join(commands), values)
         else:
             # Use COPY command
             df_.to_csv(
